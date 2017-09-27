@@ -17,42 +17,66 @@
   <div class="form-group">
     <label for="first_name" class="col-sm-2 control-label">First Name</label>
     <div class="col-sm-10">
-      <input [ngModel]="student?.first_name" ngModel #first_name="ngModel" type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name" required>
+      <input required minlength="2" [ngModel]="student?.first_name" ngModel #first_name="ngModel" type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name" required>
+      <div class="alert alert-danger" *ngIf="first_name.touched && !first_name.valid">
+        <div *ngIf="first_name.errors.required">First Name is required.</div>
+        <div *ngIf="first_name.errors.minlength">First Name should be a minimum 2 lengths.</div>     
+      </div>
     </div>
   </div>
   <div class="form-group">
     <label for="last_name" class="col-sm-2 control-label">Last Name</label>
     <div class="col-sm-10">
-      <input [ngModel]="student?.last_name" ngModel #last_name="ngModel" type="text" class="form-control" id="last_name" name="last_name"  placeholder="Last Name" required>
+      <input required minlength="2" [ngModel]="student?.last_name" ngModel #last_name="ngModel" type="text" class="form-control" id="last_name" name="last_name"  placeholder="Last Name" required>
+      <div class="alert alert-danger" *ngIf="last_name.touched && !last_name.valid">
+        <div *ngIf="last_name.errors.required">Last Name is required.</div>
+        <div *ngIf="last_name.errors.minlength">Last Name should be a minimum 2 lengths.</div>     
+      </div>
     </div>
   </div>
   <div class="form-group">
     <label for="start_date" class="col-sm-2 control-label">Start Date</label>
     <div class="col-sm-10">
-      <input [ngModel]="student?.start_date" ngModel #start_date="ngModel" type="text" class="form-control" id="start_date" name="start_date" placeholder="2017-01-01" required>
+      <input pattern="(\d{4})-(\d{2})-(\d{2})" [ngModel]="student?.start_date" ngModel #start_date="ngModel" type="text" class="form-control" id="start_date" name="start_date" placeholder="2017-01-01" required>
+      <div class="alert alert-danger" *ngIf="start_date.touched && !start_date.valid">
+        <div *ngIf="start_date.errors.required">Start Date is required.</div>        
+        <div *ngIf="start_date.errors.pattern">Start date should be in the following format: YYYY-MM-DD</div>    
+      </div>  
     </div>
   </div>
   <div class="form-group">
     <label for="gpa" class="col-sm-2 control-label">GPA</label>
     <div class="col-sm-10">
-      <input [ngModel]="student?.gpa" ngModel #gpa="ngModel" type="text" class="form-control" id="gpa" name="gpa" placeholder="4.0">
+      <input pattern="\d+\.\d+" [ngModel]="student?.gpa" ngModel #gpa="ngModel" type="text" class="form-control" id="gpa" name="gpa" placeholder="4.0">
+      <div class="alert alert-danger" *ngIf="gpa.touched && !gpa.valid">
+        <div *ngIf="gpa.errors.required">GPA is required.</div>        
+        <div *ngIf="gpa.errors.pattern">GPA should be a decimal.</div>    
+      </div>
     </div>
   </div>
   <div class="form-group">
     <label for="sat" class="col-sm-2 control-label">SAT Score</label>
     <div class="col-sm-10">
-      <input [ngModel]="student?.sat" ngModel #sat="ngModel" type="text" class="form-control" id="sat" name="sat" placeholder="1400">
+      <input required pattern="([1-2600])" [ngModel]="student?.sat" ngModel #sat="ngModel" type="text" class="form-control" id="sat" name="sat" placeholder="1400">
+      <div class="alert alert-danger" *ngIf="sat.touched && !sat.valid">
+        <div *ngIf="sat.errors.required">SAT is required.</div>
+        <div *ngIf="sat.errors.pattern">SAT score should be between 1 and 2600.</div>     
+      </div>
     </div>
   </div>
   <div class="form-group">
     <label for="major_id" class="col-sm-2 control-label">Major ID</label>
     <div class="col-sm-10">
-      <input [ngModel]="student?.major?.major_id" ngModel #major_id="ngModel" type="text" class="form-control" id="major_id" name="major_id">
+      <input required pattern="([1-7])" [ngModel]="student?.major?.major_id" ngModel #major_id="ngModel" type="text" class="form-control" id="major_id" name="major_id">
+      <div class="alert alert-danger" *ngIf="major_id.touched && !major_id.valid">
+        <div *ngIf="major_id.errors.required">Major ID is required.</div>
+        <div *ngIf="major_id.errors.pattern">The Major ID needs to be between 1 and 7.</div>
+      </div>
     </div>
   </div>
    <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button [disabled]="!studentForm.form.valid" type="submit" class="btn btn-primary">Submit</button>
     </div>
   </div>
 </form>
